@@ -68,3 +68,33 @@ variable "ci_runner_untagged" {
     default     = "true"
     description = "also run jobs without any tags"
 }
+variable "runner_service_account_id" {
+  type = string
+  default = "gitlab-ci-runner"
+  description = "service account name before @ in email"
+}
+variable "worker_service_account_id" {
+  type = string
+  default = "gitlab-ci-runner"
+  description = "service account name before @ in email"
+}
+variable "instance_network" {
+  type = string
+  default = "default"
+  description = "Name of google VPC network"
+}
+variable "boot_disk_size" {
+  type = string
+  default = "20"
+  description = "Instance boot disk size in GB, it should be more than image size"
+}
+variable "instance_image" {
+  type = string
+  default = "centos-cloud/centos-7"
+  description = "Instance boot OS image"
+}
+variable "instance_boot_disk_type" {
+  type = string
+  default = "pd-standard"
+  description = "Type of the instance boot disk pd-standard or ssd"
+}

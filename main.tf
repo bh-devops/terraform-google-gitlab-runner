@@ -17,7 +17,7 @@
 # Service account for the Gitlab CI runner.  It doesn't run builds but it spawns other instances that do.
 resource "google_service_account" "ci_runner" {
   project      = var.gcp_project
-  account_id   = "gitlab-ci-runner"
+  account_id   = var.runner_service_account_id
   display_name = "GitLab CI Runner"
 }
 resource "google_project_iam_member" "instanceadmin_ci_runner" {
@@ -39,7 +39,7 @@ resource "google_project_iam_member" "securityadmin_ci_runner" {
 # Service account for Gitlab CI build instances that are dynamically spawned by the runner.
 resource "google_service_account" "ci_worker" {
   project      = var.gcp_project
-  account_id   = "gitlab-ci-worker"
+  account_id   = var.worker_service_account_id
   display_name = "GitLab CI Worker"
 }
 
@@ -60,14 +60,14 @@ resource "google_compute_instance" "ci_runner" {
 
   boot_disk {
     initialize_params {
-      image = "centos-cloud/centos-7"
-      size  = "20"
-      type  = "pd-standard"
+      image = var.instance_image
+      size  = var.boot_disk_size
+      type  = var.instance_boot_disk_type
     }
   }
 
   network_interface {
-    network = "default"
+    network = var.instance_network
 
     access_config {
       // Ephemeral IP

@@ -119,6 +119,27 @@ sudo gitlab-runner register -n \
     --machine-machine-options "google-service-account=${google_service_account.ci_worker.email}" \
     --machine-machine-options "google-scopes=https://www.googleapis.com/auth/cloud-platform"
 
+################# INSTALL HELM ##############################################
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3
+chmod 700 get_helm.sh
+./get_helm.sh
+################ INSTALL KUBECTL ###########################################
+curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
+chmod +x ./kubectl
+sudo mv ./kubectl /usr/local/bin/kubectl
+############### INSTALL PHP 7.3 & IT's UTILS ############################################
+sudo yum -y install http://rpms.remirepo.net/enterprise/remi-release-7.rpm
+sudo yum -y install epel-release yum-utils
+sudo yum-config-manager --disable remi-php54
+sudo yum-config-manager --enable remi-php73
+sudo yum -y install php php-cli php-fpm php-mysqlnd php-zip php-devel php-gd php-mcrypt php-mbstring php-curl php-xml php-pear php-bcmath php-json wget unzip
+############### INSTALL COMPOSER #########################################################
+php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+HASH="$(wget -q -O - https://composer.github.io/installer.sig)"
+php -r "if (hash_file('SHA384', 'composer-setup.php') === '$HASH') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
+sudo php composer-setup.php --install-dir=/usr/local/bin --filename=composer
+
+
 echo "GitLab CI Runner installation complete"
 SCRIPT
 

@@ -110,6 +110,9 @@ sudo gitlab-runner register -n \
     --run-untagged="${var.ci_runner_untagged}" \
     --machine-idle-time ${var.ci_worker_idle_time} \
     --machine-machine-driver google \
+    --docker-privileged \
+    --docker-volumes /var/run/docker.sock:/var/run/docker.sock \
+    --docker-volumes /certs/client \
     --machine-machine-name "${var.ci_runner_instance_name}-%s" \
     --machine-machine-options "google-project=${var.gcp_project}" \
     --machine-machine-options "google-machine-type=${var.ci_worker_instance_type}" \

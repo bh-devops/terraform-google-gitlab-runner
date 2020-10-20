@@ -100,11 +100,21 @@ variable "instance_boot_disk_type" {
 }
 variable "worker_instance_disk_size" {
   type = number
-  default = 40
+  default = 20
   description = "Runner instance boot disk size in GB"
 }
 variable "worker_instance_disk_type" {
   type = string
   default = "pd-ssd"
   description = "Type of the worker instance boot disk pd-standard or pd-ssd"
+}
+variable "docker_image" {
+  type = string
+  default = "bhdevops/gitlab-php-builder:2"
+  description = "Image which will be use as a builder to compile code"
+}
+variable "preemptible" {
+  type = bool
+  default = true
+  description = "Define using lower cost preebmtible nodes as a worker node (true or false)"
 }

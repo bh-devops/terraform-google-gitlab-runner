@@ -1,7 +1,7 @@
 FROM php:7.3.23-alpine
 ############### INSTALL DEPENDENCIES ###############
 RUN apk update && apk upgrade && \
-    apk add nginx git openssh composer curl python3 which bash php7-soap php7-gmp libxml2-dev gmp-dev && \
+    apk add nginx git openssh composer curl python3 which bash php7-soap php7-gmp libxml2-dev gmp-dev nodejs npm && \
     docker-php-ext-install soap && \
     docker-php-ext-install gmp && \
     ln -s /usr/bin/python3 /usr/bin/python    
